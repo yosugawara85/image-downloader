@@ -159,6 +159,7 @@
 
   function suggestNewFilename(item, suggest) {
     var newFilename = '';
+    var imageUrls = ls.image_urls.split(',');
     if (ls.folder_name) {
       newFilename = ls.folder_name + '/';
     }
@@ -169,8 +170,8 @@
         newFilename += ls.new_file_name + '.' + extension;
       }
       else {
-        newFilename += ls.new_file_name + ls.image_number + '.' + extension;
-        ls.image_number++;
+        var index = ('000' + (imageUrls.indexOf(item.url) + 1)).slice(-3);
+        newFilename += ls.new_file_name + index + '.' + extension;
       }
     }
     else {
@@ -388,7 +389,7 @@
         }
       }
       ls.image_count = checkedImages.length;
-      ls.image_number = 1;
+      ls.image_urls = checkedImages;
       checkedImages.forEach(function(checkedImage) {
         chrome.downloads.download({ url: checkedImage });
       });
