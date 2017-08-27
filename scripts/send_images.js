@@ -60,7 +60,8 @@
     },
 
     extractURLFromStyle: function (url) {
-      return url.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+      // extract only the first URL
+      return url.replace(/^url\(["']?([^'")]*)["']?\).*$/, "$1");
     },
 
     isImageURL: function (url) {
